@@ -45,7 +45,7 @@ const Generate = () => {
         alert(result.message);
       })
       .catch((error) => {
-        console.error(error);
+        console.error("Error:", error);
         alert("Failed to generate short URL: " + error.message);
       });
   };
