@@ -30,7 +30,13 @@ const Generate = () => {
     };
 
     fetch("/api/generate", requestOptions)
-      .then((response) => response.json())
+      .then(async (response) => {
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(text || "Server error");
+        }
+        return response.json();
+      })
       .then((result) => {
         setGenerated(`${process.env.NEXT_PUBLIC_HOST}/${shorturl}`);
         setUrl("");
@@ -38,7 +44,10 @@ const Generate = () => {
         console.log(result);
         alert(result.message);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        alert("Failed to generate short URL: " + error.message);
+      });
   };
 
   return (
@@ -83,7 +92,6 @@ const Generate = () => {
           </Link>
         </div>
       )}
-
     </main>
   );
 };
