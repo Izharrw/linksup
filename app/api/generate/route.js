@@ -1,7 +1,7 @@
 import clientPromise from "@/lib/mongodb"
 
 export async function POST(request) {
-
+  try {
     const body = await request.json()
     const client = await clientPromise
     const db = client.db("linksup")
@@ -17,5 +17,12 @@ export async function POST(request) {
         url: body.url,
         shorturl: body.shorturl, 
     })
-  return Response.json({ success: true, error: false, message: 'URL Generated successfully' })
+    return Response.json({ success: true, error: false, message: 'URL Generated successfully' })
+  } catch (error) {
+    console.error("API Error:", error); // This will show in Vercel logs
+    return new Response(JSON.stringify({ message: "Internal Server Error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
