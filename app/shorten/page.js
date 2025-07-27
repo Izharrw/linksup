@@ -3,7 +3,7 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 
-const generate = () => {
+const Generate = () => {
   const [url, setUrl] = useState("");
   const [shorturl, setShorturl] = useState("");
   const [generated, setGenerated] = useState("");
@@ -88,4 +88,4 @@ const generate = () => {
   );
 };
 
-export default generate;
+export default Generate;
